@@ -1,0 +1,33 @@
+ Enter the index of slip rate function
+           8   9.99999978E-03   24.0000000    
+  Enter the length and width of main fault
+   30.0000000       16.0000000    
+  Enter the distance in the strike and down dip
+  direction, and the depth of the hypocenter
+   15.0000000       8.00000000       8.00000000    
+ Enter the coordinates  of hypocenter
+   0.00000000       0.00000000    
+ Enter the moment(N-m), corner frequency(Hz) and Average rupture speed
+   6.50000000       9.00000036E-02   3.00000000       3.00000000    
+ Enter the ratio of time between slip-rate increase and rise time
+  0.300000012    
+  Enter the strike, dip and rake of main fault
+   358.000000       40.0000000       113.000000    
+ Enter Max. perturbation on the dip and rake
+   15.0000000       30.0000000    
+  Enter the subfaults number along strike adn dip
+         256         128
+  Enter the numbers of subfault to be tapered at each side
+           5           5           5           5
+  Enter the seed for generating random numbers
+          52         448        4446
+ Enter first and last index of random generations
+           1           1
+  Enter the name of file with velocity structure of source region
+stgo_lf.vel                                                             
+ Enter the angle (degree) from North to X-Axis (clockwise) of SYN. code
+   0.00000000    
+ Do you output moment(1), slip-area (2), or slip(3) 
+           3
+  Enter the file name of output source parameters
+FFSP_OUTPUT                                                             
