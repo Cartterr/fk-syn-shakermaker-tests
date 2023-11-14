@@ -1,8 +1,4 @@
 h5py
-libopenmpi-dev
 matplotlib
 mpi4py
-mpi4py
-mpich
-python3-numpy
 scipy
