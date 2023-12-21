@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import obspy
 import numpy as np
 from scipy.integrate import cumulative_trapezoid
+from scipy.interpolate import interp1d
 from shakermaker import shakermaker
 from shakermaker.crustmodel import CrustModel
 from shakermaker.pointsource import PointSource
@@ -58,7 +59,7 @@ def run_fortran_scripts(nfft_fortran, dt_fortran, dk_fortran, tb_fortran, sigma_
     subprocess.run(f"./syn -M4.5/355/80/-70 -D1 -A33.5 -OPAS.z -Ghk_15/50_0.grn.0", shell=True, cwd=fk_syn_dir)
 
 
-def visualize_sac(filename, ax, scaling_factor=1):
+def visualize_sac(filename, ax, scaling_factor=1, num_points=1000):
     #Genere la ruta completa al archivo SAC
     full_path = os.path.join(fk_syn_dir, filename)
 
@@ -66,7 +67,13 @@ def visualize_sac(filename, ax, scaling_factor=1):
     st = obspy.read(full_path)
     data = st[0].data * scaling_factor
     times = st[0].times()
-    ax.plot(times, data, label=f'{filename}')
+
+    # Interpolation for smoother lines
+    interp_func = interp1d(times, data, kind='cubic')
+    high_res_times = np.linspace(times.min(), times.max(), num_points)
+    high_res_data = interp_func(high_res_times)
+
+    ax.plot(high_res_times, high_res_data, label=f'{filename}')
 
 
 
@@ -270,13 +277,13 @@ def main():
 
     s_nfft_fortran = Slider(ax_nfft_fortran, 'NFFT', valmin=64, valmax=1024, valinit=512, valstep=[64, 128, 256, 512, 1024])
     s_dt_fortran = Slider(ax_dt_fortran, 'dt',  0.0, 0.6, valinit=0.2408)
-    s_dk_fortran = Slider(ax_dk_fortran, 'dk', 0.2302, 0.2306, valinit=0.2303256)
+    s_dk_fortran = Slider(ax_dk_fortran, 'dk', 0.2302, 0.2306, valinit=0.2304056)
     s_sigma_fortran = Slider(ax_sigma_fortran, 'Sigma', 0, 20, valinit=9.58)
     s_kc_fortran = Slider(ax_kc_fortran, 'kc Kappa', 0.001, 90, valinit=13.18)
     s_pmin_fortran = Slider(ax_pmin_fortran, 'Pmin', 0, 2, valinit=0)
     s_pmax_fortran = Slider(ax_pmax_fortran, 'Pmax', 0, 2, valinit=1.292)
     s_taper_fortran = Slider(ax_taper_fortran, 'Taper', 0.01, 1, valinit=0.999)
-    s_fk_syn_scale = Slider(ax_fk_syn_scale, 'scale', valmin=1e10, valmax=1e20, valinit=0.2486e20)
+    s_fk_syn_scale = Slider(ax_fk_syn_scale, 'scale', valmin=1e10, valmax=1e20, valinit=0.1403e20)
     
 
 
