@@ -9,6 +9,12 @@ class PostInstallCommand(install):
         # Run your post install script here
         print("Running post-install steps...")
 
+        # Install numpy first
+        subprocess.run(["pip", "install", "numpy"])
+
+        # Install tkinter for the system's Python
+        subprocess.run(["sudo", "apt-get", "install", "python3-tk"])
+
         # Change directory to shakermaker
         os.chdir('shakermaker')
 
@@ -36,6 +42,7 @@ setup(
         # Remove libopenmpi-dev and mpich from here since they are system packages
         # Remove python3-numpy since we will use pip to install numpy which is compatible with the environment
         "scipy",
+        "numpy",
         "matplotlib",
         # Add any other packages that your project depends on
     ]
